@@ -1,44 +1,25 @@
 package com.example.k8sjava.controller;
 
-import io.fabric8.kubernetes.api.model.Namespace;
-import io.fabric8.kubernetes.api.model.ObjectMeta;
-import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.client.DefaultKubernetesClient;
-import io.fabric8.kubernetes.client.KubernetesClient;
+import com.example.k8sjava.service.Namespace.NamespaceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/namespaces")
+@RequiredArgsConstructor
 public class NameSpaceController {
+
+    private final NamespaceService namespaceService;
 
     @GetMapping(value = "")
     public List<String> getNameSpaces() {
-        KubernetesClient client = new DefaultKubernetesClient();
-        var namespaceList = client.namespaces().list();
-        List<String> namespaces = new ArrayList<>();
-        for (Namespace ns : namespaceList.getItems()) {
-            namespaces.add(ns.getMetadata().getName());
-        }
-        return namespaces;
+        return namespaceService.getNameSpaces();
     }
 
     @PostMapping(value = "")
     public String createNamespace(@RequestParam String namespace) {
-        KubernetesClient client = new DefaultKubernetesClient();
-
-        Namespace ns = new Namespace();
-        ns.setApiVersion("v1");
-        ns.setKind("Namespace");
-
-        ObjectMeta objectMeta = new ObjectMeta();
-        objectMeta.setName(namespace);
-
-        ns.setMetadata(objectMeta);
-
-        var savedNamespace = client.namespaces().create(ns);
-        return savedNamespace.getMetadata().getName()+" namespace created";
+        return namespaceService.createNamespace(namespace);
     }
 }
