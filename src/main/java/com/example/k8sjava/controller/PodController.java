@@ -16,8 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PodController {
 
-    @GetMapping(value = "/fabric")
-    public List<String> listAllPodsWithFabric() {
+    @GetMapping(value = "")
+    public List<String> getPods() {
         KubernetesClient client = new DefaultKubernetesClient();
         var podList = client.pods().list();
         List<String> pods = new ArrayList<>();
