@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,16 +22,17 @@ import java.util.List;
 public class K8sController {
 
     @GetMapping("/list-pods")
-    public List<V1Pod> listAllPods() throws IOException, ApiException {
+    public List<String> listAllPods() throws IOException, ApiException {
         ApiClient client  = Config.defaultClient();
         Configuration.setDefaultApiClient(client);
 
         CoreV1Api api = new CoreV1Api();
         V1PodList list = api.listPodForAllNamespaces(null, null, null, null, null, null, null, null, null);
+        List<String> pods = new ArrayList<>();
         for (V1Pod item : list.getItems()) {
-            System.out.println(item.getMetadata().getName());
+            pods.add(item.getMetadata().getName());
         }
-        return list.getItems();
+        return pods;
     }
 
 }
