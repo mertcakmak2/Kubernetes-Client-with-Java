@@ -4,14 +4,17 @@ import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/ns")
 public class NameSpaceController {
 
-    public String createNamespace() {
+    @PostMapping(value = "")
+    public String createNamespace(@RequestParam String namespace) {
         KubernetesClient client = new DefaultKubernetesClient();
 
         Namespace ns = new Namespace();
@@ -19,7 +22,7 @@ public class NameSpaceController {
         ns.setKind("Namespace");
 
         ObjectMeta objectMeta = new ObjectMeta();
-        objectMeta.setName("example-ns");
+        objectMeta.setName(namespace);
 
         ns.setMetadata(objectMeta);
 
