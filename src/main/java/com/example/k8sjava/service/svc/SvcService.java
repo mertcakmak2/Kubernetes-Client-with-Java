@@ -1,4 +1,4 @@
-package com.example.k8sjava.service.deployment;
+package com.example.k8sjava.service.svc;
 
 import com.example.k8sjava.model.CreateServiceModel;
 

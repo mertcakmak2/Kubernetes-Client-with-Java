@@ -1,4 +1,4 @@
-package com.example.k8sjava.service.deployment;
+package com.example.k8sjava.service.svc;
 
 import com.example.k8sjava.model.CreateServiceModel;
 import com.example.k8sjava.service.namespace.NamespaceService;
@@ -7,12 +7,9 @@ import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Component

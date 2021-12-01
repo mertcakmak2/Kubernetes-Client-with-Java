@@ -1,7 +1,7 @@
 package com.example.k8sjava.controller;
 
 import com.example.k8sjava.model.CreateServiceModel;
-import com.example.k8sjava.service.deployment.SvcService;
+import com.example.k8sjava.service.svc.SvcService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
