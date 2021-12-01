@@ -38,6 +38,6 @@ public class NamespaceServiceImpl implements NamespaceService{
         ns.setMetadata(objectMeta);
 
         var savedNamespace = client.namespaces().create(ns);
-        return savedNamespace.getMetadata().getName()+" namespace created";
+        return savedNamespace.getMetadata().getName();
     }
 }
