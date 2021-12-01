@@ -7,6 +7,7 @@ import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import java.util.List;
 public class SvcServiceImpl implements SvcService {
 
     @Value("${k8s.svc.kind}")
-    private final String svcKind;
+    private String svcKind;
     @Value("${k8s.svc.api-version}")
-    private final String svcApiVersion;
+    private String svcApiVersion;
     private final NamespaceService namespaceService;
 
     @Override
