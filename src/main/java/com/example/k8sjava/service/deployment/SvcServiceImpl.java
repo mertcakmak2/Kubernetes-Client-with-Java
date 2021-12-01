@@ -40,7 +40,9 @@ public class SvcServiceImpl implements SvcService {
     public String createService(CreateServiceModel serviceModel){
         KubernetesClient client = new DefaultKubernetesClient();
 
-        Service service1 = new ServiceBuilder()
+        String namespace = namespaceService.createNamespace(serviceModel.getNamespace());
+
+        Service service = new ServiceBuilder()
                 .withNewMetadata()
                 .withName(serviceModel.getName())
                 .withLabels(serviceModel.getLabels())
@@ -57,9 +59,10 @@ public class SvcServiceImpl implements SvcService {
                 .endSpec()
                 .build();
 
-        service1 = client.services().inNamespace(serviceModel.getNamespace()).create(service1);
+        System.out.println(namespace);
+        service = client.services().inNamespace(namespace).create(service);
 
-        return service1.getMetadata().getName()+" service created";
+        return service.getMetadata().getName()+" service created";
     }
 
 }
