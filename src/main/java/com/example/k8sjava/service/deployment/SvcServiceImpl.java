@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -39,29 +40,26 @@ public class SvcServiceImpl implements SvcService {
     public String createService(CreateServiceModel serviceModel){
         KubernetesClient client = new DefaultKubernetesClient();
 
-        String namespace = namespaceService.createNamespace(serviceModel.getNamespace());
+        Service service1 = new ServiceBuilder()
+                .withNewMetadata()
+                .withName(serviceModel.getName())
+                .withLabels(serviceModel.getLabels())
+                .endMetadata()
+                .withNewSpec()
+                //.withSelector(Collections.singletonMap("app", "MyApp"))
+                .addNewPort()
+                .withProtocol(serviceModel.getProtocol())
+                .withPort(serviceModel.getPort())
+                .withTargetPort(new IntOrString(serviceModel.getTargetPort()))
+                .withNodePort(serviceModel.getNodePort())
+                .endPort()
+                .withType(serviceModel.getType())
+                .endSpec()
+                .build();
 
-        Service service = new Service();
-        service.setApiVersion(svcApiVersion);
-        service.setKind(svcKind);
+        service1 = client.services().inNamespace(serviceModel.getNamespace()).create(service1);
 
-        // Service yaml Metadata
-        ObjectMeta meta = new ObjectMeta();
-        meta.setName(serviceModel.getName());
-        meta.setNamespace(namespace);
-        meta.setLabels(serviceModel.getLabels());
-        service.setMetadata(meta);
-
-        // Service yaml Spec
-        IntOrString targetPort = new IntOrString(serviceModel.getTargetPort());
-        ServicePort port = new ServicePort(null,null, serviceModel.getNodePort(), serviceModel.getPort(), serviceModel.getProtocol(), targetPort);
-        ServiceSpec spec = new ServiceSpec();
-        spec.setPorts(Arrays.asList(port));
-        spec.setType(serviceModel.getType());
-        service.setSpec(spec);
-
-        Service createdService = client.services().create(service);
-        return createdService.getMetadata().getName()+" service created";
+        return service1.getMetadata().getName()+" service created";
     }
 
 }
