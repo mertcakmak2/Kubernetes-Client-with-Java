@@ -1,4 +1,4 @@
-package com.example.k8sjava.service.Namespace;
+package com.example.k8sjava.service.namespace;
 
 import java.util.List;
 

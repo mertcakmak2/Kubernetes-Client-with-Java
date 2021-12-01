@@ -1,4 +1,4 @@
-package com.example.k8sjava.service.Pod;
+package com.example.k8sjava.service.pod;
 
 import java.util.List;
 

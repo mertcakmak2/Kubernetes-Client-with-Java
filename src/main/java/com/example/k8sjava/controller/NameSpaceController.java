@@ -1,6 +1,6 @@
 package com.example.k8sjava.controller;
 
-import com.example.k8sjava.service.Namespace.NamespaceService;
+import com.example.k8sjava.service.namespace.NamespaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

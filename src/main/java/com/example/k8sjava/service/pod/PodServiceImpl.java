@@ -1,14 +1,15 @@
-package com.example.k8sjava.service.Pod;
+package com.example.k8sjava.service.pod;
 
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class PodServiceImpl implements PodService{
 
     @Override
