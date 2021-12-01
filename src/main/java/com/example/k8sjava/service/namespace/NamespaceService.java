@@ -6,5 +6,7 @@ public interface NamespaceService {
 
     List<String> getNameSpaces();
 
+    boolean isNotExistNamespace(String name);
+
     String createNamespace(String namespace);
 }

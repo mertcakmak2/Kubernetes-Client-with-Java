@@ -59,7 +59,6 @@ public class SvcServiceImpl implements SvcService {
                 .endSpec()
                 .build();
 
-        System.out.println(namespace);
         service = client.services().inNamespace(namespace).create(service);
 
         return service.getMetadata().getName()+" service created";

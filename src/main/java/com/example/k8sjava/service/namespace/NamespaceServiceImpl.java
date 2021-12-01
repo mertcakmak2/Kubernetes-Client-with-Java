@@ -5,10 +5,10 @@ import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class NamespaceServiceImpl implements NamespaceService{
@@ -25,8 +25,18 @@ public class NamespaceServiceImpl implements NamespaceService{
     }
 
     @Override
+    public boolean isNotExistNamespace(String name) {
+        KubernetesClient client = new DefaultKubernetesClient();
+        return client.namespaces().list().getItems()
+                .stream().filter(namespace -> namespace.getMetadata().getName().equals(name))
+                .collect(Collectors.toList()).isEmpty();
+    }
+
+    @Override
     public String createNamespace(String namespace) {
         KubernetesClient client = new DefaultKubernetesClient();
+
+        if(!isNotExistNamespace(namespace)) return namespace;
 
         Namespace ns = new Namespace();
         ns.setApiVersion("v1");
