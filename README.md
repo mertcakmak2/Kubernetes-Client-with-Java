@@ -1,13 +1,34 @@
 
+## API Kullanımı
+
+#### Kubernetes içerisinde bir Service nesnesi oluşturur.
+
+```http
+  POST /api/svcs
+```
+
+| Parametre | Tip     | 
+| :-------- | :------- 
+| `createServiceModel` | `CreateServiceModel`
+
+#### Kubernetes içerisinde bir Deployment nesnesi oluşturur.
+
+```http
+  POST /api/deployments
+```
+
+| Parametre | Tip     | 
+| :-------- | :------- | 
+| `createDeploymentModel`      | `CreateDeploymentModel` | 
 
 
 
-## Examples
+  
+## Kullanım/Örnekler
 
 ```java
 
-Create Redis Service Request
-
+createServiceModel:
 {
   "namespace": "redis-cluster",
   "name": "svc-redis",
@@ -21,8 +42,7 @@ Create Redis Service Request
   "type": "NodePort"
 }
 
-Create Redis Deployment Request
-
+createDeploymentModel:
 {
   "namespace": "redis-cluster",
   "name": "deployment-redis",
@@ -44,5 +64,5 @@ Create Redis Deployment Request
   ]
 }
 ```
-
+![image](https://user-images.githubusercontent.com/21373505/144596598-ba7a0013-4e9c-4265-a426-3eedd9b515b3.png)
   
