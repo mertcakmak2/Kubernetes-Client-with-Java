@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,5 +69,18 @@ public class DeploymentServiceImpl implements DeploymentService{
         deployment = client.apps().deployments().inNamespace(namespace).create(deployment);
 
         return deployment.getMetadata().getName()+" deployment created";
+    }
+
+    public String deleteDeploymentByName(String deploymentName){
+        KubernetesClient client = new DefaultKubernetesClient();
+        var deploymentList = client.apps().deployments().list().getItems();
+        Deployment deployment = deploymentList.stream()
+                .filter(dp -> dp.getMetadata().getName().equals(deploymentName))
+                .collect(Collectors.toList()).get(0);
+        if(client.apps().deployments().delete(deployment)){
+            return deploymentName+" successfully deleted";
+        } else {
+            return "Deployment silme işlemi sırasında hata oluştu.";
+        }
     }
 }
