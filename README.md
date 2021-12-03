@@ -45,4 +45,6 @@ Create Redis Deployment Request
 }
 ```
 
+![image](https://user-images.githubusercontent.com/21373505/144596598-ba7a0013-4e9c-4265-a426-3eedd9b515b3.png)
+
   
