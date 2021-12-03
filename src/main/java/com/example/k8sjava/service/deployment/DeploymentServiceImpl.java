@@ -71,6 +71,7 @@ public class DeploymentServiceImpl implements DeploymentService{
         return deployment.getMetadata().getName()+" deployment created";
     }
 
+    @Override
     public String deleteDeploymentByName(String deploymentName){
         KubernetesClient client = new DefaultKubernetesClient();
         var deploymentList = client.apps().deployments().list().getItems();

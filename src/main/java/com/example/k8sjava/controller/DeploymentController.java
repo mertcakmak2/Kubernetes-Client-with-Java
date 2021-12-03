@@ -23,4 +23,9 @@ public class DeploymentController {
     public String getDeployments(@RequestBody CreateDeploymentModel deploymentModel){
         return deploymentService.createDeployment(deploymentModel);
     }
+
+    @DeleteMapping(value = "")
+    public String getDeployments(@RequestParam String deploymentName){
+        return deploymentService.deleteDeploymentByName(deploymentName);
+    }
 }

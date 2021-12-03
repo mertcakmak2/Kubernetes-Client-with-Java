@@ -8,4 +8,6 @@ public interface DeploymentService {
     List<String> getDeployments();
 
     String createDeployment(CreateDeploymentModel deploymentModel);
+
+    String deleteDeploymentByName(String deploymentName);
 }
