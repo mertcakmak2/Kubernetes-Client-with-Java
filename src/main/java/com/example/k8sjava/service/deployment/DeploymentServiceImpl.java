@@ -1,17 +1,22 @@
 package com.example.k8sjava.service.deployment;
 
 import com.example.k8sjava.model.CreateDeploymentModel;
+import com.example.k8sjava.service.namespace.NamespaceService;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DeploymentServiceImpl implements DeploymentService{
+
+    private final NamespaceService namespaceService;
 
     @Override
     public List<String> getDeployments(){
@@ -24,7 +29,12 @@ public class DeploymentServiceImpl implements DeploymentService{
         return deployments;
     }
 
+    @Override
     public String createDeployment(CreateDeploymentModel deploymentModel){
+
+        KubernetesClient client = new DefaultKubernetesClient();
+
+        String namespace = namespaceService.createNamespace(deploymentModel.getNamespace());
 
         //Todo : null vermeyi dene  yada deployment yaml dosyasındaki container portu sil.
         Deployment deployment = new DeploymentBuilder()
@@ -55,6 +65,8 @@ public class DeploymentServiceImpl implements DeploymentService{
                 .endSpec()
                 .build();
 
-        return "deployment created";
+        deployment = client.apps().deployments().inNamespace(namespace).create(deployment);
+
+        return deployment.getMetadata().getName()+" deployment created";
     }
 }
