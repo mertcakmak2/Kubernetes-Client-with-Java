@@ -1,6 +1,8 @@
 
 ## API Kullanımı
 
+# `Redis Dağıtım Örneği`
+
 #### Kubernetes içerisinde bir Service nesnesi oluşturur.
 
 ```http
