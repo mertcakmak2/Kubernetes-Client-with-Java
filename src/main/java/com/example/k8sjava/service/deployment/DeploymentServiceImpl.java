@@ -82,10 +82,10 @@ public class DeploymentServiceImpl implements DeploymentService{
             if(client.apps().deployments().delete(deployment)){
                 return deploymentName+" successfully deleted";
             } else {
-                return "Deployment silme işlemi sırasında hata oluştu.";
+                return "Error.";
             }
         } else {
-            return "Deployment bulunamadı.";
+            return "Deployment not found.";
         }
 
     }
