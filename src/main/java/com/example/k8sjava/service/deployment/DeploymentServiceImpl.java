@@ -75,12 +75,17 @@ public class DeploymentServiceImpl implements DeploymentService{
         KubernetesClient client = new DefaultKubernetesClient();
         var deploymentList = client.apps().deployments().list().getItems();
         Deployment deployment = deploymentList.stream()
-                .filter(dp -> dp.getMetadata().getName().equals(deploymentName))
-                .collect(Collectors.toList()).get(0);
-        if(client.apps().deployments().delete(deployment)){
-            return deploymentName+" successfully deleted";
+                .filter(dp -> dp.getMetadata().getName().equals(deploymentName)).findFirst().orElse(null);
+
+        if(deployment != null){
+            if(client.apps().deployments().delete(deployment)){
+                return deploymentName+" successfully deleted";
+            } else {
+                return "Deployment silme işlemi sırasında hata oluştu.";
+            }
         } else {
-            return "Deployment silme işlemi sırasında hata oluştu.";
+            return "Deployment bulunamadı.";
         }
+
     }
 }
